@@ -1,0 +1,6 @@
+framework module Pods_3d_bereal {
+  umbrella header "Pods-3d-bereal-umbrella.h"
+
+  export *
+  module * { export * }
+}
