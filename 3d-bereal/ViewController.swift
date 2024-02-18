@@ -17,12 +17,12 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     var recordingStartTime: Date?
     
     @IBOutlet weak var but: UIButton!
-    
-    @IBOutlet weak var camera: UISegmentedControl!
+
     @IBOutlet weak var preview: UIView!
     var countdownSeconds = 3
     @IBOutlet weak var countDown: UILabel?
     
+    @IBOutlet weak var camera: UISegmentedControl!
     @IBOutlet weak var currentTime: UILabel?
     
     override func viewDidLoad() {
@@ -43,50 +43,54 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         
         //camera switch
         
-        camera.selectedSegmentIndex = 1 // Assuming back camera is default
+        camera.selectedSegmentIndex = 0 // Assuming front camera is default
 
         // Add target action
 //        camera.addTarget(self, action: #selector(cameraSwitchChanged(_:)), for: .valueChanged)
        
     }
-//
-//    @objc func cameraSwitchChanged(_ sender: UISegmentedControl) {
-//        switchCamera(toFront: sender.selectedSegmentIndex == 0)
-//    }
-//
-    
-//    @IBAction func switchCamera(_ sender: UISegmentedControl) {
-//        if camera.selectedSegmentIndex == 1{
-//            camera.selectedSegmentIndex = 0
-//        }
-//        else{
-//            camera.selectedSegmentIndex = 1
-//        }
-//    }
-    
-    
+
     @objc func updateTimeLabel() {
         let formatter = DateFormatter()
         formatter.timeStyle = .medium // Use .long, .medium, .short for different styles
         currentTime?.text = formatter.string(from: Date())
     }
     
+    @IBAction func switchCamera(_ sender: UISegmentedControl) {
+        setupCameraSession()
+    }
+    
+    
     
     func setupCameraSession() {
-        captureSession = AVCaptureSession()
-        captureSession.beginConfiguration()
-        
         // Assuming you're using the rear camera
-        guard let videoDevice = AVCaptureDevice.default(for: .video),
-              let videoInput = try? AVCaptureDeviceInput(device: videoDevice),
-              captureSession.canAddInput(videoInput) else { return }
-        
-        captureSession.addInput(videoInput)
-        
-        videoOutput = AVCaptureMovieFileOutput()
-        if captureSession.canAddOutput(videoOutput) {
-            captureSession.addOutput(videoOutput)
+        if camera.selectedSegmentIndex == 1{
+            captureSession = AVCaptureSession()
+            captureSession.beginConfiguration()
+            guard let videoDevice = AVCaptureDevice.default(for: .video),
+                  let videoInput = try? AVCaptureDeviceInput(device: videoDevice),
+                  captureSession.canAddInput(videoInput) else { return }
+            
+            captureSession.addInput(videoInput)
+            
+            videoOutput = AVCaptureMovieFileOutput()
+            if captureSession.canAddOutput(videoOutput) {
+                captureSession.addOutput(videoOutput)
+            }
+        } else {
+            captureSession = AVCaptureSession()
+            captureSession.beginConfiguration()
+            guard let videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front),
+                  let videoInput = try? AVCaptureDeviceInput(device: videoDevice),
+                  captureSession.canAddInput(videoInput) else { return }
+            captureSession.addInput(videoInput)
+            
+            videoOutput = AVCaptureMovieFileOutput()
+            if captureSession.canAddOutput(videoOutput) {
+                captureSession.addOutput(videoOutput)
+            }
         }
+        
         
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer.frame = preview.bounds // Use the bounds of the container view
@@ -102,6 +106,7 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         captureSession.commitConfiguration()
         captureSession.startRunning()
     }
+    
     
     var countdownTimer: Timer?
     func startCountdown() {

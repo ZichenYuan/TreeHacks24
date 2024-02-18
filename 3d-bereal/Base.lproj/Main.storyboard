@@ -17,17 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="gUN-8r-fQD">
-                                <rect key="frame" x="275" y="803" width="118" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="Front"/>
-                                    <segment title="Back"/>
-                                </segments>
-                                <connections>
-                                    <action selector="switchCamera:" destination="BYZ-38-t0r" eventType="valueChanged" id="TLc-ha-uDk"/>
-                                </connections>
-                            </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NFo-hE-i5h">
                                 <rect key="frame" x="176" y="774" width="60" height="59"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
@@ -58,6 +47,17 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="gUN-8r-fQD">
+                                <rect key="frame" x="251" y="774" width="118" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Front"/>
+                                    <segment title="Back"/>
+                                </segments>
+                                <connections>
+                                    <action selector="switchCamera:" destination="BYZ-38-t0r" eventType="valueChanged" id="TIH-tw-GTL"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="labelColor"/>
@@ -65,7 +65,7 @@
                     <navigationItem key="navigationItem" id="2dm-Zd-fdT"/>
                     <connections>
                         <outlet property="but" destination="NFo-hE-i5h" id="z2O-6i-Pam"/>
-                        <outlet property="camera" destination="gUN-8r-fQD" id="hlH-Zd-Akd"/>
+                        <outlet property="camera" destination="gUN-8r-fQD" id="xMv-es-0XN"/>
                         <outlet property="countDown" destination="Sfx-nA-Eyu" id="zLh-ZK-fo7"/>
                         <outlet property="currentTime" destination="Hr9-AU-1Gq" id="Sc9-tP-NzL"/>
                         <outlet property="preview" destination="5gb-wz-fnk" id="IkO-5R-7dN"/>
